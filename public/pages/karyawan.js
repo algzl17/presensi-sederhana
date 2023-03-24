@@ -140,7 +140,6 @@ function deleteItem(id) {
                     reload_table();
                     Swal.close();
                     Swal.fire({
-                        position: "top-end",
                         icon: "success",
                         title: "Berhasil hapus data",
                         showConfirmButton: false,
