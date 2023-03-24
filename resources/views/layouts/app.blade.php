@@ -70,7 +70,7 @@
                                 <span>
                                     <i class="ti ti-face-id"></i>
                                 </span>
-                                <span class="hide-menu">Masuk</span>
+                                <span class="hide-menu">Absensi</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
