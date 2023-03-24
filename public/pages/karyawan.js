@@ -90,7 +90,7 @@ function action() {
                 .catch(function (error) {
                     Swal.fire({
                         icon: "error",
-                        text: "Ups, gagal, silakan ulangi lagi!",
+                        text: "Ups.. gagal, silakan ulangi lagi!",
                         showConfirmButton: false,
                         timer: 1000,
                     });
@@ -111,7 +111,7 @@ function action() {
                 .catch(function (error) {
                     Swal.fire({
                         icon: "error",
-                        text: "Ups, gagal, silakan ulangi lagi!",
+                        text: "Ups.. gagal, silakan ulangi lagi!",
                         showConfirmButton: false,
                         timer: 1000,
                     });
@@ -149,7 +149,7 @@ function deleteItem(id) {
                 .catch(function (error) {
                     Swal.fire({
                         icon: "error",
-                        text: "Ups, gagal, silakan ulangi lagi!",
+                        text: "Ups.. gagal, silakan ulangi lagi!",
                         showConfirmButton: false,
                         timer: 1000,
                     });
