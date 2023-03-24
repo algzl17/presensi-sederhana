@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mst_karyawan', function (Blueprint $table) {
-            $table->id('id_karyawan');
+            $table->bigIncrements('id_karyawan');
+            $table->integer('id_jabatan');
             $table->integer('nik');
             $table->string('nama', 128);
             $table->string('telp', 16);
-            $table->integer('id_jabatan');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

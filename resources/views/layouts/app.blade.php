@@ -66,7 +66,7 @@
                             <span class="hide-menu">Presensi</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="/masuk" aria-expanded="false">
+                            <a class="sidebar-link" href="{{ route('presensi') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-face-id"></i>
                                 </span>
@@ -76,9 +76,9 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/pulang" aria-expanded="false">
                                 <span>
-                                    <i class="ti ti-face-id-error"></i>
+                                    <i class="ti ti-report"></i>
                                 </span>
-                                <span class="hide-menu">Pulang</span>
+                                <span class="hide-menu">Laporan</span>
                             </a>
                         </li>
 

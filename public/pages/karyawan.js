@@ -14,7 +14,7 @@ $(function () {
             { data: "nik", name: "nik" },
             { data: "nama", name: "nama" },
             { data: "telp", name: "telp" },
-            { data: "qrcode", name: "qrcode" },
+            { data: "status", name: "status" },
             { data: "aksi", name: "aksi", orderable: false, searchable: false },
         ],
         lengthMenu: [10, 20, 50, 100],
@@ -61,6 +61,7 @@ function editItem(id) {
             $("[name='nik']").val(response.data.nik);
             $("[name='nama']").val(response.data.nama);
             $("[name='telp']").val(response.data.telp);
+            $("[name=status]").val(response.data.status);
             $("#saveModal").text("Simpan");
             $("#titleModal").text("Sunting Karyawan");
             showModal();

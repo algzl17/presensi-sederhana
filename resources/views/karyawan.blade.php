@@ -9,11 +9,11 @@
             <thead>
                 <tr>
                     <th width="10%">No.</th>
-                    <th>Jabatan</th>
+                    <th width="15%">Jabatan</th>
                     <th>NIK</th>
                     <th>Nama</th>
                     <th>Telp</th>
-                    <th>Qrcode</th>
+                    <th width="10%">Status</th>
                     <th width="10%">Aksi</th>
                 </tr>
             </thead>
@@ -57,9 +57,18 @@
                         <label class="form-label">Nama Lengkap</label>
                         <input type="text" class="form-control" required name="nama">
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label">Telepon</label>
-                        <input type="number" class="form-control" required name="telp">
+                    <div class="row mb-2">
+                        <div class="col-lg-8 form-group">
+                            <label class="form-label">Telepon</label>
+                            <input type="number" class="form-control" required name="telp">
+                        </div>
+                        <div class="col-lg-4 form-group">
+                            <label class="form-label">Status</label>
+                            <select name="status" class="form-control" required>
+                                <option value="1">Aktif</option>
+                                <option value="0">Tidak Aktif</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
                 <button class="btn btn-primary" id="saveModal" onclick="action()">SIMPAN</button>

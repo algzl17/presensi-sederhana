@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\PresensiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,4 +28,10 @@ Route::middleware(['auth'])->prefix('home')->group(function () {
 
     Route::resource('jabatan', JabatanController::class);
     Route::resource('karyawan', KaryawanController::class);
+
+    Route::controller(PresensiController::class)->group(function () {
+        Route::get('/presensi', 'index')->name('presensi');
+        Route::get('/presensi-pilih/{val}', 'presensi_pilih')->name('presensi.pilih');
+        Route::get('/presensi-absen/{qr}', 'absen')->name('presensi.absen');
+    });
 });

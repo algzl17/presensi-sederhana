@@ -23,11 +23,11 @@ class KaryawanController extends Controller
 
             return DataTables::of($query)
                 ->addIndexColumn()
+                ->editColumn('status', function ($row) {
+                    return $row->status ? '<i class="fa-regular fa-circle-check text-success"></i>' : '<i class="fa-regular fa-circle-xmark text-danger"></i>';
+                })
                 ->editColumn('created_at', function ($row) {
                     return date('d/m/Y', strtotime($row->created_at));
-                })
-                ->addColumn('qrcode', function ($row) {
-                    return QrCode::size(25)->generate($row->nik);
                 })
                 ->addColumn('aksi', function ($row) {
                     return '<div class="flex justify-center">
@@ -38,7 +38,7 @@ class KaryawanController extends Controller
                         <i class="ti ti-trash"></i>
                     </button>
                 </div>';
-                })->rawColumns(['aksi', 'qrcode'])
+                })->rawColumns(['aksi', 'status'])
                 ->make(true);
         }
         $jabatan = Jabatan::query()->orderBy('jabatan')->get();

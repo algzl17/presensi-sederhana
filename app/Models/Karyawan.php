@@ -13,10 +13,11 @@ class Karyawan extends Model
     protected $primaryKey = 'id_karyawan';
 
     protected $fillable = [
+        'id_jabatan',
         'nama',
         'telp',
         'nik',
-        'id_jabatan'
+        'status'
     ];
 
     public function jabatan()
