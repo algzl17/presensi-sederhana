@@ -31,6 +31,9 @@ Route::middleware(['auth'])->prefix('home')->group(function () {
 
     Route::controller(PresensiController::class)->group(function () {
         Route::get('/presensi', 'index')->name('presensi');
+        Route::get('/presensi/{id}', 'edit')->name('presensi.edit');
+        Route::get('/presensi-batal/{id}', 'batal')->name('presensi.batal');
+        Route::get('/presensi-update/{id}', 'update')->name('presensi.update');
         Route::get('/presensi-pilih/{val}', 'presensi_pilih')->name('presensi.pilih');
         Route::get('/presensi-absen/{qr}', 'absen')->name('presensi.absen');
     });

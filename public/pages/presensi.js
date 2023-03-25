@@ -63,7 +63,8 @@ function runinput(event) {
             .get(route("presensi.absen", val))
             .then(function (res) {
                 if (res.data.status) {
-                    $("#label").text(res.data.result);
+                    $("#labelnama").text(res.data.result.nama);
+                    $("#labeljabatan").text(res.data.result.jabatan);
                     Swal.fire({
                         icon: "success",
                         text: "Berhasil presensi",
@@ -90,6 +91,88 @@ function runinput(event) {
                 });
             });
     }
+}
+
+// sunting
+function editpre(id) {
+    axios
+        .get(route("presensi.edit", id))
+        .then(function (response) {
+            const dt = response.data;
+            $("#labidk").val(dt.idk);
+            $("#lab_nik").text(dt.nik);
+            $("#lab_nama").text(dt.nama);
+            $("#lab_jabatan").text(dt.jabatan);
+            $("#ket").val(dt.status);
+            if (dt.masuk) {
+                $("#lab_masuk").text(dt.masuk);
+                $("#btnmasuk").attr("hidden", false);
+            } else {
+                $("#lab_masuk").text("-");
+                $("#btnmasuk").attr("hidden", true);
+            }
+            if (dt.pulang) {
+                $("#lab_pulang").text(dt.pulang);
+                $("#btnpulang").attr("hidden", false);
+            } else {
+                $("#lab_pulang").text("-");
+                $("#btnpulang").attr("hidden", true);
+            }
+            showModal();
+        })
+        .catch(function (error) {
+            console.log("error");
+        });
+}
+
+function updateku(stt) {
+    axios
+        .get(route("presensi.update", $("#labidk").val()) + "?status=" + stt)
+        .then(function (response) {
+            reload_table();
+            hideModal();
+            Swal.fire({
+                icon: "success",
+                text: "Berhasil merubah keterangan absensi",
+                showConfirmButton: false,
+                timer: 1000,
+            });
+        })
+        .catch(function (error) {
+            console.log("error");
+        });
+}
+
+function batal(tipe) {
+    Swal.fire({
+        title: "MEMBATALKAN ABSENSI",
+        text: "Anda yakin membatalkan presensi " + tipe,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#DE3333",
+        cancelButtonColor: "#919294",
+        confirmButtonText: "Yakin",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const v = $("#labidk").val();
+            axios
+                .get(route("presensi.batal", v) + "?tipe=" + tipe)
+                .then(function (response) {
+                    reload_table();
+                    editpre(v);
+                    Swal.fire({
+                        icon: "success",
+                        text: "Berhasil batal absensi",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                })
+                .catch(function (error) {
+                    console.log("error");
+                });
+        }
+    });
 }
 
 function hideModal(id) {

@@ -17,9 +17,11 @@ class PresensiController extends Controller
         if (request()->ajax()) {
             $query = Karyawan::query()
                 ->leftJoin('mst_jabatan as b', 'b.id_jabatan', 'mst_karyawan.id_jabatan')
-                ->leftJoin('presensi as a', 'a.id_karyawan', 'mst_karyawan.id_karyawan')
+                ->leftJoin('presensi as a', function ($join) {
+                    $join->on('a.id_karyawan', '=', 'mst_karyawan.id_karyawan');
+                    $join->on('a.tanggal', '=', DB::raw("'" . date('Y-m-d') . "'"));
+                })
                 ->where('mst_karyawan.status', 1)
-                ->where('tanggal', date('Y-m-d'))
                 ->select('a.*', 'mst_karyawan.id_karyawan as idk', 'mst_karyawan.nama', 'b.jabatan');
 
             if (request()->ajax() && !request()->get('order')) {
@@ -52,7 +54,7 @@ class PresensiController extends Controller
                 })
                 ->addColumn('aksi', function ($row) {
                     return '
-                    <button data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Sunting" onclick="editItem(' . $row->idk . ')" class="btn btn-warning btn-sm">
+                    <button data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Sunting" onclick="editpre(' . $row->idk . ')" class="btn btn-warning btn-sm">
                         <i class="ti ti-edit"></i>
                     </button>
                     ';
@@ -83,7 +85,10 @@ class PresensiController extends Controller
                     ]);
                 return response()->json([
                     'status' => true,
-                    'result' => $karyawan->nama . ' - ' . $karyawan->jabatan->jabatan
+                    'result' => [
+                        'nama' => $karyawan->nama,
+                        'jabatan' => $karyawan->jabatan->jabatan,
+                    ]
                 ]);
             } else {
                 return response()->json([
@@ -97,6 +102,60 @@ class PresensiController extends Controller
                 'error' => 'QRcode tidak terdaftar!'
             ]);
         }
+    }
+
+    public function edit($id)
+    {
+        return Karyawan::query()
+            ->leftJoin('mst_jabatan as b', 'b.id_jabatan', 'mst_karyawan.id_jabatan')
+            ->leftJoin('presensi as a', function ($join) {
+                $join->on('a.id_karyawan', '=', 'mst_karyawan.id_karyawan');
+                $join->on('a.tanggal', '=', DB::raw("'" . date('Y-m-d') . "'"));
+            })
+            ->where('mst_karyawan.id_karyawan', $id)
+            ->select('a.*', 'mst_karyawan.id_karyawan as idk', 'mst_karyawan.nama', 'mst_karyawan.nik', 'b.jabatan')
+            ->first();
+    }
+
+    public function update($id)
+    {
+        DB::table('presensi')
+            ->updateOrInsert([
+                'id_karyawan' => $id,
+                'tanggal' => date('Y-m-d')
+            ], [
+                'status' => request()->get('status'),
+                'masuk' => null,
+                'pulang' => null,
+            ]);
+        return response()->json(['status', true]);
+    }
+
+    public function batal($id)
+    {
+        $tipe = request()->get('tipe') ?? session('absen');
+
+        DB::table('presensi')
+            ->where('id_karyawan', $id)
+            ->where('tanggal', date('Y-m-d'))
+            ->update([$tipe => null]);
+
+
+        $hapus = DB::table('presensi')
+            ->where('id_karyawan', $id)
+            ->where('tanggal', date('Y-m-d'))
+            ->whereNull('masuk')
+            ->whereNull('pulang')
+            ->first();
+
+        if ($hapus) {
+            DB::table('presensi')
+                ->where('id_karyawan', $id)
+                ->where('tanggal', date('Y-m-d'))
+                ->delete();
+        }
+
+        return response()->json(['status', true]);
     }
 
     public function presensi_pilih($val)
