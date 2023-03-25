@@ -40,17 +40,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input type="text" class="form-control text-center" placeholder="QRCODE" autocomplete="off"
-                    id="qr">
+                <input type="text" class="form-control text-center" onkeypress="runinput(event)" placeholder="QRCODE"
+                    autocomplete="off" id="qr">
                 <ul class="list-group mt-4 mb-2 mx-3 text-center">
-                    <li class="list-group-item">Nama - Jabatan</li>
+                    <li class="list-group-item" id="label">Nama - Jabatan</li>
                     <li class="list-group-item">
                         <div class="d-grid">
                             <button class="btn btn-warning" disabled type="button">BATAL</button>
                         </div>
                     </li>
                 </ul>
-
             </div>
         </div>
     </div>

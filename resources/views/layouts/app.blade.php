@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ assets('css/styles.min.css') }}" />
     <link rel="stylesheet" href="{{ assets('libs/datatable/dataTables.bootstrap5.min.css') }}" />
     <link rel="stylesheet" href="{{ assets('libs/fontawesome-free/css/all.min.css') }}" />
+    <link rel="stylesheet" href="{{ assets('libs/sweetalert2/sweetalert2.min.css') }}" />
     <link rel="stylesheet" href="{{ assets('css/styles.css') }}" />
     @routes
 </head>
@@ -138,7 +139,7 @@
             </div>
         </div>
     </div>
-    <script src="{{ assets('libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ assets('libs/jquery-3.6.4.min.js') }}"></script>
     <script src="{{ assets('libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ assets('js/sidebarmenu.js') }}"></script>
     <script src="{{ assets('libs/simplebar/dist/simplebar.js') }}"></script>
@@ -147,8 +148,8 @@
     <script src="{{ assets('libs/parsley/parsley.js') }}"></script>
     <script src="{{ assets('libs/parsley/i18n/id.js') }}"></script>
     <script src="{{ assets('libs/axios.min.js') }}"></script>
+    <script src="{{ assets('libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
     <script src="{{ assets('js/app.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('scripts')
 </body>
 

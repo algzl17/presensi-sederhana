@@ -49,8 +49,47 @@ function reload_table() {
 function qrcode() {
     const label = $("#pilih option:selected").text();
     $("#mdQrcodeLabel").text("Absensi QRcode | " + label);
+    $("#qr").val(null);
     $("#qr").focus();
+    $("#label").text("Nama - Jabatan");
     showModal("mdQrcode");
+}
+
+function runinput(event) {
+    var x = event.code;
+    if (x == "Enter") {
+        const val = $("#qr").val();
+        axios
+            .get(route("presensi.absen", val))
+            .then(function (res) {
+                if (res.data.status) {
+                    $("#label").text(res.data.result);
+                    Swal.fire({
+                        icon: "success",
+                        text: "Berhasil presensi",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                    reload_table();
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        text: res.data.error,
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                }
+                $("#qr").val(null);
+            })
+            .catch(function (error) {
+                Swal.fire({
+                    icon: "error",
+                    text: "Ups.. gagal, silakan ulangi lagi!",
+                    showConfirmButton: false,
+                    timer: 1000,
+                });
+            });
+    }
 }
 
 function hideModal(id) {
@@ -86,35 +125,4 @@ function pilih(v) {
 
 $("body").on("shown.bs.modal", "#mdQrcode", function () {
     $("input:visible:enabled:first", this).focus();
-
-    $("#qr").on("keypress", function (event) {
-        if (event.which == 13 && !event.shiftKey) {
-            const val = $("#qr").val();
-            axios
-                .get(route("presensi.absen", val))
-                .then(function (res) {
-                    if (res.data.status) {
-                        const data = res.data.result;
-                        reload_table();
-                        console.log(data);
-                    } else {
-                        Swal.fire({
-                            icon: "error",
-                            text: res.data.error,
-                            showConfirmButton: false,
-                            timer: 1000,
-                        });
-                    }
-                })
-                .catch(function (error) {
-                    Swal.fire({
-                        icon: "error",
-                        text: "Ups.. gagal, silakan ulangi lagi!",
-                        showConfirmButton: false,
-                        timer: 1000,
-                    });
-                });
-            event.preventDefault();
-        }
-    });
 });

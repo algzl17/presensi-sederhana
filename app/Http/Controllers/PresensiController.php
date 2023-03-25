@@ -19,6 +19,7 @@ class PresensiController extends Controller
                 ->leftJoin('mst_jabatan as b', 'b.id_jabatan', 'mst_karyawan.id_jabatan')
                 ->leftJoin('presensi as a', 'a.id_karyawan', 'mst_karyawan.id_karyawan')
                 ->where('mst_karyawan.status', 1)
+                ->where('tanggal', date('Y-m-d'))
                 ->select('a.*', 'mst_karyawan.id_karyawan as idk', 'mst_karyawan.nama', 'b.jabatan');
 
             if (request()->ajax() && !request()->get('order')) {
